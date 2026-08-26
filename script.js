@@ -1,28 +1,28 @@
-// Получаем доступ к холсту из HTML и его графическому контексту 2D
+
 const canvas = document.getElementById('pendulumCanvas');
 const ctx = canvas.getContext('2d');
 
-// --- 1. ФИЗИЧЕСКИЕ ПЕРЕМЕННЫЕ ---
-let r1 = 120;     // Длина первого стержня
-let r2 = 120;     // Длина второго стержня
-let m1 = 10;      // Масса первого грузика
-let m2 = 10;      // Масса второго грузика
 
-// Добавляем небольшой сдвиг (+0.2 и +0.3), чтобы система сразу вывелась из равновесия и закрутилась
+let r1 = 120;
+let r2 = 120;   
+let m1 = 10;     
+let m2 = 10;      
+
+
 let theta1 = Math.PI / 2 + 0.2; 
 let theta2 = Math.PI / 2 + 0.3;
 
-let omega1 = 0;   // Начальная скорость 1
-let omega2 = 0;   // Начальная скорость 2
+let omega1 = 0;   
+let omega2 = 0;   
 
-let g = 0.8;      // Гравитационная постоянная для пикселей
+let g = 0.8;      
 
-let trajectory = []; // Массив для шлейфа хаоса
+let trajectory = []; 
 
-let cx = canvas.width / 2; // Центр экрана по X
-let cy = 180;              // Точка крепления маятника по Y
+let cx = canvas.width / 2; 
+let cy = 180;              
 
-// Функция расчета ускорений по уравнениям Лагранжа
+
 function computeAccelerations(t1, t2, w1, w2) {
     let delta = t1 - t2;
 
@@ -37,13 +37,13 @@ function computeAccelerations(t1, t2, w1, w2) {
     return { alpha1, alpha2 };
 }
 
-// Главный цикл анимации
+
 function animate() {
-    // Очищаем экран
+    
     ctx.fillStyle = '#0f172a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Делаем несколько микро-шагов за кадр для высокой точности физики
+    
     for (let step = 0; step < 5; step++) {
         let { alpha1, alpha2 } = computeAccelerations(theta1, theta2, omega1, omega2);
         
@@ -52,25 +52,25 @@ function animate() {
         theta1 += omega1;
         theta2 += omega2;
 
-        // Легкое затухание (трение воздуха)
+      
         omega1 *= 0.9995;
         omega2 *= 0.9995;
     }
 
-    // Координаты грузиков
+    
     let x1 = cx + r1 * Math.sin(theta1);
     let y1 = cy + r1 * Math.cos(theta1);
 
     let x2 = x1 + r2 * Math.sin(theta2);
     let y2 = y1 + r2 * Math.cos(theta2);
 
-    // Сохраняем точку для шлейфа
+    
     trajectory.push({ x: x2, y: y2 });
     if (trajectory.length > 400) {
         trajectory.shift();
     }
 
-    // Отрисовка хвоста хаоса
+ 
     ctx.beginPath();
     for (let i = 0; i < trajectory.length - 1; i++) {
         let p1 = trajectory[i];
@@ -82,7 +82,7 @@ function animate() {
         ctx.stroke();
     }
 
-    // Отрисовка стержней
+    
     ctx.beginPath();
     ctx.strokeStyle = '#ffffff';
     ctx.lineWidth = 3;
@@ -92,7 +92,7 @@ function animate() {
     ctx.lineTo(x2, y2);
     ctx.stroke();
 
-    // Грузики (красный и зеленый)
+    
     ctx.beginPath();
     ctx.fillStyle = '#f43f5e';
     ctx.arc(x1, y1, m1, 0, Math.PI * 2);
@@ -103,9 +103,9 @@ function animate() {
     ctx.arc(x2, y2, m2, 0, Math.PI * 2);
     ctx.fill();
 
-    // Запрос следующего кадра анимации
+    
     requestAnimationFrame(animate);
 }
 
-// Запуск симуляции
+
 animate();
