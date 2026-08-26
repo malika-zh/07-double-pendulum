@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Chaos Theory: Double Pendulum Simulation</title>
+    <style>
+        
+        body {
+            margin: 0;
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            color: #38bdf8;
+        }
+        p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        canvas {
+            background: #0f172a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chaotic Double Pendulum</h1>
+    <p>Simulation based on Lagrangian Mechanics & Differential Equations</p>
+
+    
+    <canvas id="pendulumCanvas" width="800" height="600"></canvas>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
